@@ -20,3 +20,10 @@ Yes
 ## Is this still ALPHA?
 Yes
 
+## How to install?
+```sh
+curl -sLO git.io/alpine-chroot.sh
+chmod +x alpine-chroot.sh
+
+./alpine-chroot.sh
+```

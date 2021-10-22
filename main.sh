@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 
-[ $(id -u) != 0 ] && echo -e "alpine-chroot must be run with root.\nIf you don't have root, You may try alpine-proot:\n  sh -c \"\$(curl -sL git.io/alpine-proot)\"" && exit 6
+[ $(id -u) != 0 ] &&  {
+	[ -x alpine-proot.sh ] && exec bash alpine-proot.sh
+	echo "It seems like you didn't run this as root, or you didn't have root."
+	echo "However, You may try alpine-proot for non-root device / permission."
+	read -p "Install alpine-proot now [y/n]? " s
+	case $s in
+		y|Y)  {
+			curl -L#o alpine-proot.sh https://raw.githubusercontent.com/Yonle/alpine-proot/master/main.sh
+			[ $? != 0 ] && exit 1
+			chmod +x alpine-proot.sh
+			echo "Next time, Run this command to launch alpine-proot:"
+			echo "  ./alpine-proot.sh"
+			exec bash alpine-proot.sh
+		} ;;
+		*)  exit 6 ;;
+	esac
+}
+
 [ ! $HOME ] && export HOME=/home
 [ ! $PREFIX ] && [ -x /usr ] && [ -d /usr ] && export PREFIX=/usr
 [ ! $TMPDIR ] && export TMPDIR=/tmp
