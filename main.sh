@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ $(uname -s) != "Linux" ] && exec echo "Expected Linux kernel, But got unsupported kernel (${uname -s})."
+[ $(uname -s) != "Linux" ] && exec echo "Expected Linux kernel, But got unsupported kernel ($(uname -s))."
 [ $(id -u) != 0 ] &&  {
 	[ -x alpine-proot.sh ] && exec bash alpine-proot.sh
 	echo "It seems like you didn't run this as root, or you didn't have root."
