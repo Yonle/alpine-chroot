@@ -52,7 +52,7 @@ if [ ! -d $CONTAINER_PATH ] || [ -z "$(ls -A $CONTAINER_PATH)" ] || [ ! -x $CONT
 	# If extraction fail, Delete cached rootfs and exit
 	[ $? != 0 ] && rm -f $HOME/.cached_rootfs.tar.gz && exit 1
 
-	echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" > $CONTAINER_PATH/etc/resolv.con
+	echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" > $CONTAINER_PATH/etc/resolv.conf
 fi
 
 for i in dev proc sys; do
