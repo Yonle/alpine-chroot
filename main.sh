@@ -56,12 +56,12 @@ if [ ! -d $CONTAINER_PATH ] || [ -z "$(ls -A $CONTAINER_PATH)" ] || [ ! -x $CONT
 fi
 
 for i in dev proc sys; do
-	mount /$i $CONTAINER_PATH/$i
+	mount -o bind /$i $CONTAINER_PATH/$i
 	[ $? != 0 ] && exec echo -e "\nIt seems like you're running alpine-chroot with faked uid. However this is not gonna work anyway because alpine-chroot requires REAL ROOT to mount & unmount some common path to guest such as /dev, /proc, and /sys. Rerun this script without fake root/fake uid utilities for more informattion."
 done
 
 cmd=$@
-chroot $CONTAINER_PATH ${cmd:-/bin/su}
+chroot $CONTAINER_PATH ${cmd:-/bin/su -l}
 
 for i in dev proc sys; do
 	umount $CONTAINER_PATH/$i
